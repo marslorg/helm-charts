@@ -49,14 +49,3 @@ Selector labels
 app.kubernetes.io/name: {{ include "music2web.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
-
-{{/*
-Create the name of the service account to use
-*/}}
-{{- define "music2web.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "music2web.fullname" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
-{{- end }}
-{{- end }}
