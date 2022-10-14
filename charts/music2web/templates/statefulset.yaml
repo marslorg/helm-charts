@@ -5,6 +5,7 @@ metadata:
   labels:
     {{- include "music2web.labels" . | nindent 4 }}
 spec:
+  serviceName: {{ .Values.serviceName }}
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
@@ -24,11 +25,11 @@ spec:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
-            matchExpressions:
-            - key: app.kubernetes.io/name
-              operator: In
-              values:
-              - {{ include "music2web.name" . }}
+              matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                - {{ include "music2web.name" . }}
             topologyKey: {{ .Values.podAntiAffinity.topologyKey }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
@@ -44,11 +45,15 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
+              path: /health
               port: http
           readinessProbe:
             httpGet:
-              path: /
+              path: /ready
+              port: http
+          startupProbe:
+            httpGet:
+              path: /startup
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
@@ -74,10 +79,6 @@ spec:
         hostPath:
           path: {{ .Values.errorHandlerFile.hostPath }}
           type: FileOrCreate
-      rollingUpdate:
-        enabled: {{ .Values.rollingUpdate.enabled }}
-        maxSurge: {{ .Values.rollingUpdate.maxSurge }}
-        maxUnavalaible: {{ .Values.rollingUpdate.maxUnavailable }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -127,3 +128,9 @@ spec:
           requests:
             storage: {{ .Values.shared.size }}
         storageClassName: {{ .Values.shared.storageClass }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      enabled: {{ .Values.rollingUpdate.enabled }}
+      maxSurge: {{ .Values.rollingUpdate.maxSurge }}
+      maxUnavalaible: {{ .Values.rollingUpdate.maxUnavailable }}
