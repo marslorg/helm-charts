@@ -1,0 +1,130 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "music2web.fullname" . }}
+  labels:
+    {{- include "music2web.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "music2web.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "music2web.selectorLabels" . | nindent 8 }}
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+            matchExpressions:
+            - key: app.kubernetes.io/name
+              operator: In
+              values:
+              - {{ include "music2web.name" . }}
+            topologyKey: {{ .Values.podAntiAffinity.topologyKey }}
+      serviceAccountName: {{ include "music2web.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "ghcr.io/marslorg/music2web:latest"
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+          - mountPath: /var/www/html/includes/config.inc.php
+            name: configFile
+          - mountPath: /var/www/html/includes/errorHandler.php
+            name: errorHandlerFile
+          - mountPath: /var/www/html/albums
+            name: albums-pvc
+          - mountPath: /var/www/html/files
+            name: files-pvc
+          - mountPath: /var/www/html/news
+            name: news-pvc
+          - mountPath: /var/www/html/shared
+            name: shared-pvc
+      volumes:
+      - name: configFile
+        hostPath:
+          path: {{ .Values.configFile.hostPath }}
+          type: FileOrCreate
+      - name: errorHandlerFile
+        hostPath:
+          path: {{ .Values.errorHandlerFile.hostPath }}
+          type: FileOrCreate
+      rollingUpdate:
+        enabled: {{ .Values.rollingUpdate.enabled }}
+        maxSurge: {{ .Values.rollingUpdate.maxSurge }}
+        maxUnavalaible: {{ .Values.rollingUpdate.maxUnavailable }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  volumeClaimTemplates:
+    - metadata:
+        name: albums-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.albums.size }}
+        storageClassName: {{ .Values.albums.storageClass }}
+    - metadata:
+        name: files-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.files.size }}
+        storageClassName: {{ .Values.files.storageClass }}
+    - metadata:
+        name: news-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.news.size }}
+        storageClassName: {{ .Values.news.storageClass }}
+    - metadata:
+        name: shared-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.shared.size }}
+        storageClassName: {{ .Values.shared.storageClass }}
