@@ -4,10 +4,7 @@
 
 serviceName: music2web
 
-rollingUpdate:
-  enabled: true
-  maxSurge: "100%"
-  maxUnavailable: "50%"
+updateStrategy: RollingUpdate
 
 albums:
   storageClass: m2walbums-storage

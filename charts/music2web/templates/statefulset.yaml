@@ -128,9 +128,5 @@ spec:
           requests:
             storage: {{ .Values.shared.size }}
         storageClassName: {{ .Values.shared.storageClass }}
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      enabled: {{ .Values.rollingUpdate.enabled }}
-      maxSurge: {{ .Values.rollingUpdate.maxSurge }}
-      maxUnavalaible: {{ .Values.rollingUpdate.maxUnavailable }}
+  updateStrategy:
+    type: {{ .Values.updateStrategy }}
