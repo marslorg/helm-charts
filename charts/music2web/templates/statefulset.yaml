@@ -59,9 +59,9 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
           - mountPath: /var/www/html/includes/config.inc.php
-            name: configFile
+            name: config-file
           - mountPath: /var/www/html/includes/errorHandler.php
-            name: errorHandlerFile
+            name: error-handler-file
           - mountPath: /var/www/html/albums
             name: albums-pvc
           - mountPath: /var/www/html/files
@@ -71,11 +71,11 @@ spec:
           - mountPath: /var/www/html/shared
             name: shared-pvc
       volumes:
-      - name: configFile
+      - name: config-file
         hostPath:
           path: {{ .Values.configFile.hostPath }}
           type: FileOrCreate
-      - name: errorHandlerFile
+      - name: error-handler-file
         hostPath:
           path: {{ .Values.errorHandlerFile.hostPath }}
           type: FileOrCreate
