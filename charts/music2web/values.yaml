@@ -23,10 +23,12 @@ shared:
   size: 200Gi
 
 configFile:
-  hostPath: /home/docker/public/music2web/includes/config.inc.php
+  configMap: music2web-config-file
+  subPath: config.inc.php
 
 errorHandlerFile:
-  hostPath: /home/docker/public/music2web/includes/errorHandler.php
+  configMap: music2web-error-handler-file
+  subPath: errorHandler.php
 
 nameOverride: ""
 fullnameOverride: ""
