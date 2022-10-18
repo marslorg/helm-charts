@@ -7,16 +7,20 @@ serviceName: music2web
 updateStrategy: RollingUpdate
 
 albums:
-  hostPath: /home/docker/public/music2web/albums
+  storageClass: m2walbums-storage
+  size: 200Gi
 
 files:
-  hostPath: /home/docker/public/music2web/files
+  storageClass: m2wfiles-storage
+  size: 200Gi
 
 news:
-  hostPath: /home/docker/public/music2web/news
+  storageClass: m2wnews-storage
+  size: 200Gi
 
 shared:
-  hostPath: /home/docker/public/music2web/shared
+  storageClass: m2wshared-storage
+  size: 200Gi
 
 configFile:
   configMap: music2web-config-file

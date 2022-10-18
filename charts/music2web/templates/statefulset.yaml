@@ -65,30 +65,14 @@ spec:
             name: error-handler-file-volume
             subPath: {{ .Values.errorHandlerFile.subPath }}
           - mountPath: /var/www/html/albums
-            name: albums-vol
+            name: albums-pvc
           - mountPath: /var/www/html/files
-            name: files-vol
+            name: files-pvc
           - mountPath: /var/www/html/news
-            name: news-vol
+            name: news-pvc
           - mountPath: /var/www/html/shared
-            name: shared-vol
+            name: shared-pvc
       volumes:
-      - name: albums-vol
-        hostPath:
-          path: {{ .Values.albums.hostPath }}
-          type: Directory
-      - name: files-vol
-        hostPath:
-          path: {{ .Values.files.hostPath }}
-          type: Directory
-      - name: news-vol
-        hostPath:
-          path: {{ .Values.news.hostPath }}
-          type: Directory
-      - name: shared-vol
-        hostPath:
-          path: {{ .Values.shared.hostPath }}
-          type: Directory
       - name: config-file-volume
         configMap:
           name: {{ .Values.configFile.configMap }}
@@ -107,5 +91,42 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+  volumeClaimTemplates:
+    - metadata:
+        name: albums-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.albums.size }}
+        storageClassName: {{ .Values.albums.storageClass }}
+    - metadata:
+        name: files-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.files.size }}
+        storageClassName: {{ .Values.files.storageClass }}
+    - metadata:
+        name: news-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.news.size }}
+        storageClassName: {{ .Values.news.storageClass }}
+    - metadata:
+        name: shared-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.shared.size }}
+        storageClassName: {{ .Values.shared.storageClass }}
   updateStrategy:
     type: {{ .Values.updateStrategy }}
