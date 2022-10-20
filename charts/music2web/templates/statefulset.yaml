@@ -65,13 +65,17 @@ spec:
             name: error-handler-file-volume
             subPath: {{ .Values.errorHandlerFile.subPath }}
           - mountPath: /var/www/html/albums
-            name: albums-pvc
+            name: gluster-m2walbums-vol
+            readOnly: false
           - mountPath: /var/www/html/files
-            name: files-pvc
+            name: gluster-m2wfiles-vol
+            readOny: false
           - mountPath: /var/www/html/news
-            name: news-pvc
+            name: gluster-m2wnews-vol
+            readOnly: false
           - mountPath: /var/www/html/shared
-            name: shared-pvc
+            name: gluster-m2wshared-vol
+            readOnly: false
       volumes:
       - name: config-file-volume
         configMap:
@@ -79,6 +83,18 @@ spec:
       - name: error-handler-file-volume
         configMap:
           name: {{ .Values.errorHandlerFile.configMap }}
+      - name: gluster-m2walbums-vol
+        persistentVolumeClaim:
+          claimName: gluster-m2walbums-claim
+      - name: gluster-m2wfiles-vol
+        persistentVolumeClaim:
+          claimName: gluster-m2wfiles-claim
+      - name: gluster-m2wnews-vol
+        persistentVolumeClaim:
+          claimName: gluster-m2wnews-claim
+      - name: gluster-m2wshared-vol
+        persistentVolumeClaim:
+          claimName: gluster-m2wshared-claim
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -91,42 +107,5 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-  volumeClaimTemplates:
-    - metadata:
-        name: albums-pvc
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: {{ .Values.albums.size }}
-        storageClassName: {{ .Values.albums.storageClass }}
-    - metadata:
-        name: files-pvc
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: {{ .Values.files.size }}
-        storageClassName: {{ .Values.files.storageClass }}
-    - metadata:
-        name: news-pvc
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: {{ .Values.news.size }}
-        storageClassName: {{ .Values.news.storageClass }}
-    - metadata:
-        name: shared-pvc
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: {{ .Values.shared.size }}
-        storageClassName: {{ .Values.shared.storageClass }}
   updateStrategy:
     type: {{ .Values.updateStrategy }}
