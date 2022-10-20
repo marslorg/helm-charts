@@ -69,7 +69,7 @@ spec:
             readOnly: false
           - mountPath: /var/www/html/files
             name: gluster-m2wfiles-vol
-            readOny: false
+            readOnly: false
           - mountPath: /var/www/html/news
             name: gluster-m2wnews-vol
             readOnly: false
@@ -85,16 +85,16 @@ spec:
           name: {{ .Values.errorHandlerFile.configMap }}
       - name: gluster-m2walbums-vol
         persistentVolumeClaim:
-          claimName: gluster-m2walbums-claim
+          claimName: {{ .Values.albums.pvc }}
       - name: gluster-m2wfiles-vol
         persistentVolumeClaim:
-          claimName: gluster-m2wfiles-claim
+          claimName: {{ .Values.files.pvc }}
       - name: gluster-m2wnews-vol
         persistentVolumeClaim:
-          claimName: gluster-m2wnews-claim
+          claimName: {{ .Values.news.pvc }}
       - name: gluster-m2wshared-vol
         persistentVolumeClaim:
-          claimName: gluster-m2wshared-claim
+          claimName: {{ .Values.shared.pvc }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

@@ -7,20 +7,16 @@ serviceName: music2web
 updateStrategy: RollingUpdate
 
 albums:
-  storageClass: m2walbums-storage
-  size: 200Gi
+  pvc: gluster-m2walbums-claim
 
 files:
-  storageClass: m2wfiles-storage
-  size: 200Gi
+  pvc: gluster-m2wfiles-claim
 
 news:
-  storageClass: m2wnews-storage
-  size: 200Gi
+  pvc: gluster-m2wnews-claim
 
 shared:
-  storageClass: m2wshared-storage
-  size: 200Gi
+  pvc: gluster-m2wshared-claim
 
 configFile:
   configMap: music2web-config-file
