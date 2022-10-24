@@ -65,6 +65,7 @@ spec:
             name: error-handler-file-volume
             subPath: {{ .Values.errorHandlerFile.subPath }}
           - mountPath: /etc/msmtprc
+            name: msmtp-file-volume
             subPath: {{ .Values.msmtpFile.subPath }}
           - mountPath: /var/www/html/albums
             name: gluster-m2walbums-vol
