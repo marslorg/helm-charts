@@ -64,6 +64,8 @@ spec:
           - mountPath: /var/www/html/includes/errorHandler.php
             name: error-handler-file-volume
             subPath: {{ .Values.errorHandlerFile.subPath }}
+          - mountPath: /etc/msmtprc
+            subPath: {{ .Values.msmtpFile.subPath }}
           - mountPath: /var/www/html/albums
             name: gluster-m2walbums-vol
             readOnly: false
@@ -83,6 +85,9 @@ spec:
       - name: error-handler-file-volume
         configMap:
           name: {{ .Values.errorHandlerFile.configMap }}
+      - name: msmtp-file-volume
+        configMap:
+          name: {{ .Values.msmtpFile.configMap }}
       - name: gluster-m2walbums-vol
         persistentVolumeClaim:
           claimName: {{ .Values.albums.pvc }}

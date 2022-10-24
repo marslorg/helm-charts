@@ -26,6 +26,10 @@ errorHandlerFile:
   configMap: music2web-error-handler-file
   subPath: errorHandler.php
 
+msmtpFile:
+  configMap: music2web-msmtp-file
+  subPath: msmtprc
+
 nameOverride: ""
 fullnameOverride: ""
 
