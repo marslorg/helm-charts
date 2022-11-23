@@ -24,13 +24,15 @@ spec:
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: app.kubernetes.io/name
-                operator: In
-                values:
-                - {{ include "music2web.name" . }}
-            topologyKey: {{ .Values.podAntiAffinity.topologyKey }}
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                  - {{ include "music2web.name" . }}
+              topologyKey: {{ .Values.podAntiAffinity.topologyKey }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
