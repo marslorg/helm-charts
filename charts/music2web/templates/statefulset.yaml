@@ -70,16 +70,16 @@ spec:
             name: msmtp-file-volume
             subPath: {{ .Values.msmtpFile.subPath }}
           - mountPath: /var/www/html/albums
-            name: gluster-m2walbums-vol
+            name: m2walbums-vol
             readOnly: false
           - mountPath: /var/www/html/files
-            name: gluster-m2wfiles-vol
+            name: m2wfiles-vol
             readOnly: false
           - mountPath: /var/www/html/news
-            name: gluster-m2wnews-vol
+            name: m2wnews-vol
             readOnly: false
           - mountPath: /var/www/html/shared
-            name: gluster-m2wshared-vol
+            name: m2wshared-vol
             readOnly: false
       volumes:
       - name: config-file-volume
@@ -91,16 +91,16 @@ spec:
       - name: msmtp-file-volume
         configMap:
           name: {{ .Values.msmtpFile.configMap }}
-      - name: gluster-m2walbums-vol
+      - name: m2walbums-vol
         persistentVolumeClaim:
           claimName: {{ .Values.albums.pvc }}
-      - name: gluster-m2wfiles-vol
+      - name: m2wfiles-vol
         persistentVolumeClaim:
           claimName: {{ .Values.files.pvc }}
-      - name: gluster-m2wnews-vol
+      - name: m2wnews-vol
         persistentVolumeClaim:
           claimName: {{ .Values.news.pvc }}
-      - name: gluster-m2wshared-vol
+      - name: m2wshared-vol
         persistentVolumeClaim:
           claimName: {{ .Values.shared.pvc }}
       {{- with .Values.nodeSelector }}

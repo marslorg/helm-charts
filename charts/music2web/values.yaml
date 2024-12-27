@@ -10,7 +10,7 @@ albums:
   pvc: gluster-m2walbums-claim
 
 files:
-  pvc: gluster-m2wfiles-claim
+  pvc: ceph-m2wfiles-claim
 
 news:
   pvc: gluster-m2wnews-claim
