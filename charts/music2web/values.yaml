@@ -7,16 +7,16 @@ serviceName: music2web
 updateStrategy: RollingUpdate
 
 albums:
-  pvc: gluster-m2walbums-claim
+  pvc: ceph-m2walbums-pvc
 
 files:
-  pvc: ceph-m2wfiles-claim
+  pvc: ceph-m2wfiles-pvc
 
 news:
-  pvc: gluster-m2wnews-claim
+  pvc: ceph-m2wnews-pvc
 
 shared:
-  pvc: gluster-m2wshared-claim
+  pvc: ceph-m2wshared-pvc
 
 configFile:
   configMap: music2web-config-file
