@@ -46,29 +46,20 @@ spec:
               containerPort: 80
               protocol: TCP
           livenessProbe:
-            initialDelaySeconds: 10
             periodSeconds: 60
             timeoutSeconds: 10
-            failureThreshold: 1
-            terminationGracePeriodSeconds: 150
             httpGet:
               path: /health
               port: http
           readinessProbe:
-            initialDelaySeconds: 10
             periodSeconds: 60
             timeoutSeconds: 10
-            failureThreshold: 1
-            terminationGracePeriodSeconds: 150
             httpGet:
               path: /ready
               port: http
           startupProbe:
-            initialDelaySeconds: 10
             periodSeconds: 60
             timeoutSeconds: 10
-            failureThreshold: 1
-            terminationGracePeriodSeconds: 150
             httpGet:
               path: /startup
               port: http
