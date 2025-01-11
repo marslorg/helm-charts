@@ -47,19 +47,19 @@ spec:
               protocol: TCP
           livenessProbe:
             periodSeconds: 60
-            timeoutSeconds: 10
+            timeoutSeconds: 90
             httpGet:
               path: /health
               port: http
           readinessProbe:
             periodSeconds: 60
-            timeoutSeconds: 10
+            timeoutSeconds: 90
             httpGet:
               path: /ready
               port: http
           startupProbe:
             periodSeconds: 60
-            timeoutSeconds: 10
+            timeoutSeconds: 90
             httpGet:
               path: /startup
               port: http
