@@ -39,7 +39,7 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "ghcr.io/marslorg/music2web:7e9ff91bb7d9a5966691bc4622555c8048e8c982"
+          image: "ghcr.io/marslorg/music2web:610a763e21ecc988d3ba0bc544d3888b51cec69a"
           imagePullPolicy: Always
           ports:
             - name: http
