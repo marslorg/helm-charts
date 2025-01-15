@@ -46,19 +46,19 @@ spec:
               containerPort: 80
               protocol: TCP
           livenessProbe:
-            periodSeconds: 60
+            periodSeconds: 30
             timeoutSeconds: 90
             httpGet:
               path: /health
               port: http
           readinessProbe:
-            periodSeconds: 60
+            periodSeconds: 30
             timeoutSeconds: 90
             httpGet:
               path: /ready
               port: http
           startupProbe:
-            periodSeconds: 60
+            periodSeconds: 30
             timeoutSeconds: 90
             httpGet:
               path: /startup
