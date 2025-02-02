@@ -3,6 +3,16 @@ entries:
   music2web:
   - apiVersion: v2
     appVersion: 2025.01r6
+    created: "2025-02-02T12:32:54.502050651Z"
+    description: Helm chart to install Music2Web.de on a Kubernetes cluster
+    digest: bc5720ac120912bda519acf23e6477a24851447e8b0b338af35030b683a4dee3
+    name: music2web
+    type: application
+    urls:
+    - https://github.com/marslorg/helm-charts/releases/download/music2web-1.1.7/music2web-1.1.7.tgz
+    version: 1.1.7
+  - apiVersion: v2
+    appVersion: 2025.01r6
     created: "2025-01-19T12:58:44.399860097Z"
     description: Helm chart to install Music2Web.de on a Kubernetes cluster
     digest: c45d6647c8e15f86bc3cef4d35acf5eec99f8f1a49b0a82c3c496aa40acd79ac
