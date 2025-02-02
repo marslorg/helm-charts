@@ -90,8 +90,8 @@ autoscaling:
   enabled: true
   minReplicas: 3
   maxReplicas: 6
-  targetCPUUtilizationPercentage: 80
-  targetMemoryUtilizationPercentage: 80
+  targetCPUUtilizationPercentage: 95
+  targetMemoryUtilizationPercentage: 95
 
 nodeSelector: {}
 
