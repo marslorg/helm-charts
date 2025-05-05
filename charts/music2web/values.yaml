@@ -20,7 +20,7 @@ shared:
 
 configFile:
   configMap: music2web-config-file
-  subPath: config.inc.php
+  subPath: configuration.php
 
 errorHandlerFile:
   configMap: music2web-error-handler-file
