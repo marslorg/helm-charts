@@ -1,5 +1,16 @@
 apiVersion: v1
 entries:
+  matomo:
+  - apiVersion: v2
+    appVersion: 5.3.2
+    created: "2025-07-20T15:46:56.344064963Z"
+    description: Helm chart to install Matomo on a Kubernetes cluster
+    digest: 31fa81d529eab62251b71092a3c2e9e3a7ac6ad12779df0768a6cec3d6dbc94f
+    name: matomo
+    type: application
+    urls:
+    - https://github.com/marslorg/helm-charts/releases/download/matomo-1.0.0/matomo-1.0.0.tgz
+    version: 1.0.0
   music2web:
   - apiVersion: v2
     appVersion: "2025.06"
