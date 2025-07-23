@@ -45,6 +45,24 @@ spec:
             - name: http
               containerPort: 80
               protocol: TCP
+          livenessProbe:
+            periodSeconds: 30
+            timeoutSeconds: 90
+            httpGet:
+              path: /matomo.php
+              port: http
+          readinessProbe:
+            periodSeconds: 30
+            timeoutSeconds: 90
+            httpGet:
+              path: /matomo.php
+              port: http
+          startupProbe:
+            periodSeconds: 30
+            timeoutSeconds: 90
+            httpGet:
+              path: /matomo.php
+              port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
